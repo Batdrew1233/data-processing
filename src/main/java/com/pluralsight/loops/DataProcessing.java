@@ -6,41 +6,86 @@ import java.util.Scanner;
 
 public class DataProcessing {
     public static void main(String[] args) {
+        List<Person> people = createPeopleList();
+
+        System.out.print("Enter a name to search: ");
         Scanner scanner = new Scanner(System.in);
-        List<Person> people = new ArrayList<>();
+        String searchName = scanner.nextLine();
 
-        people.add(new Person("Billy", "John", 34));
-        people.add(new Person("Sarah", "Williams", 28));
-        people.add(new Person("Michael", "Brown", 41));
-        people.add(new Person("Jessica", "Davis", 22));
-        people.add(new Person("Daniel", "Miller", 30));
-        people.add(new Person("Ashley", "Wilson", 26));
-        people.add(new Person("Christopher", "Moore", 38));
-        people.add(new Person("Emily", "Taylor", 19));
-        people.add(new Person("Matthew", "Davis", 45));
-        people.add(new Person("Olivia", "Thomas", 31));
-
-        System.out.print("Search name: ");
-        String name = scanner.nextLine();
-
-
-        List<Person> match = new ArrayList<>();
-
-        for(Person person : people){
-            if (name.equalsIgnoreCase(person.getFirstName()) || name.equalsIgnoreCase(person.getLastName())){
-                match.add(person);
+        List<Person> matchingPeople = new ArrayList<>();
+        for (Person person : people) {
+            if (person.getFirstName().equalsIgnoreCase(searchName) ||
+                    person.getLastName().equalsIgnoreCase(searchName)) {
+                matchingPeople.add(person);
             }
-
         }
 
-        for (Person matched : match){
-            System.out.println(matched);
+        System.out.println("People with matching name:");
+        for (Person person : matchingPeople) {
+            System.out.println(person.getFirstName() + " " + person.getLastName());
         }
 
-        double totalAge = 0;
-        for (Person person:people){
+        //int averageAge = calculateAverageAge(people);
+        double averageAge = calculateAverageAge(people);
+        System.out.println("Average age: " + averageAge);
+
+        int oldestAge = findOldestAge(people);
+        System.out.println("Oldest person's age: " + oldestAge);
+
+        int youngestAge = findYoungestAge(people);
+        System.out.println("Youngest person's age: " + youngestAge);
+    }
+
+    private static List<Person> createPeopleList() {
+        List<Person> people = new ArrayList<>();
+        // Add at least 10 people to the list
+        people.add(new Person("John", "Doe", 25));
+        people.add(new Person("Jane", "Smith", 30));
+        people.add(new Person("Michael", "Johnson", 35));
+        people.add(new Person("Emily", "Brown", 22));
+        people.add(new Person("David", "Miller", 40));
+        people.add(new Person("Sarah", "Davis", 28));
+        people.add(new Person("Daniel", "Anderson", 33));
+        people.add(new Person("Jessica", "Wilson", 27));
+        people.add(new Person("Matthew", "Martinez", 31));
+        people.add(new Person("Olivia", "Taylor", 29));
+
+        return people;
+    }
+
+/*    private static int calculateAverageAge(List<Person> people) {
+        int totalAge = 0;
+        for (Person person : people) {
             totalAge += person.getAge();
         }
-        totalAge = totalAge / people.size();
+        return (int) Math.round((double) totalAge / people.size());
+    }*/
+
+    private static double calculateAverageAge(List<Person> people) {
+        double totalAge = 0;
+        for (Person person : people) {
+            totalAge += person.getAge();
+        }
+        return totalAge / people.size();
+    }
+
+    private static int findOldestAge(List<Person> people) {
+        int maxAge = Integer.MIN_VALUE;
+        for (Person person : people) {
+            if (person.getAge() > maxAge) {
+                maxAge = person.getAge();
+            }
+        }
+        return maxAge;
+    }
+
+    private static int findYoungestAge(List<Person> people) {
+        int minAge = Integer.MAX_VALUE;
+        for (Person person : people) {
+            if (person.getAge() < minAge) {
+                minAge = person.getAge();
+            }
+        }
+        return minAge;
     }
 }
