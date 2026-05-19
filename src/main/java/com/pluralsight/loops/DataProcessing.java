@@ -12,13 +12,20 @@ public class DataProcessing {
         Scanner scanner = new Scanner(System.in);
         String searchName = scanner.nextLine();
 
-        List<Person> matchingPeople = new ArrayList<>();
-        for (Person person : people) {
+        List<Person> matchingPeople = people
+                .stream().filter(person ->person.getLastName().equalsIgnoreCase(searchName) ||
+                        person.getFirstName().equalsIgnoreCase(searchName))
+                        .toList();
+
+
+
+        /*for (Person person : people) {
             if (person.getFirstName().equalsIgnoreCase(searchName) ||
                     person.getLastName().equalsIgnoreCase(searchName)) {
                 matchingPeople.add(person);
             }
         }
+         */
 
         System.out.println("People with matching name:");
         for (Person person : matchingPeople) {
