@@ -36,5 +36,11 @@ public class DataProcessing {
         for (Person matched : match){
             System.out.println(matched);
         }
+
+        double totalAge = 0;
+        for (Person person:people){
+            totalAge += person.getAge();
+        }
+        totalAge = totalAge / people.size();
     }
 }
