@@ -3,6 +3,7 @@ package com.pluralsight.loops;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class DataProcessing {
     public static void main(String[] args) {
@@ -69,30 +70,46 @@ public class DataProcessing {
     }*/
 
     private static double calculateAverageAge(List<Person> people) {
-        double totalAge = 0;
+        int totalAge = people.stream().map(Person::getAge)
+                .reduce(0, (total, age) -> total + age);
+                return  totalAge / people.size();
+        /*double totalAge = 0;
         for (Person person : people) {
             totalAge += person.getAge();
         }
         return totalAge / people.size();
+
+         */
     }
 
     private static int findOldestAge(List<Person> people) {
-        int maxAge = Integer.MIN_VALUE;
+        return  people.stream()
+                .map(Person::getAge)
+                .reduce(Integer.MIN_VALUE, Integer::max);
+
+        /*int maxAge = Integer.MIN_VALUE;
         for (Person person : people) {
             if (person.getAge() > maxAge) {
                 maxAge = person.getAge();
             }
         }
         return maxAge;
+
+         */
     }
 
     private static int findYoungestAge(List<Person> people) {
-        int minAge = Integer.MAX_VALUE;
+        return  people.stream()
+                .map(Person::getAge)
+                .reduce(Integer.MAX_VALUE, Integer::min);
+        /* int minAge = Integer.MAX_VALUE;
         for (Person person : people) {
             if (person.getAge() < minAge) {
                 minAge = person.getAge();
             }
         }
         return minAge;
+
+        */
     }
 }
